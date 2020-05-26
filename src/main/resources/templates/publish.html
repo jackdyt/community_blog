@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>Jack's Blog</title>
+    <title>Publish</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/blog.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -47,5 +48,42 @@
         </div>
     </div>
 </nav>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>Post</h2>
+            <hr>
+
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" class="form-control" rows="10" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">Description</label>
+                    <input type="text" class="form-control" name="tag" id="tag" placeholder="type in tag, separate by ," required>
+                </div>
+
+                <div class="container-fluid main ">
+                    <div class="row">
+                        <span th:if="${error!=null}" class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"></span>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"></div>
+                        <button type="submit" class="btn btn-success btn-publish ">Post</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>Project attention</h3>
+            Be concise!
+        </div>
+    </div>
+</div>
 </body>
 </html>
