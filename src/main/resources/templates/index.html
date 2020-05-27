@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/blog.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -47,5 +48,32 @@
         </div>
     </div>
 </nav>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Find What's New</h2>
+            <hr>
+            <div class="media" th:each="essayDTO: ${essays}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${essayDTO.user.getAvatarUrl()}" >
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${essayDTO.getTitle()}"></h4>
+                    <span th:text="${essayDTO.getDescription()}"></span>
+                    <span class="text-desc"> <span th:text="${essayDTO.getCommentCount()}"></span> response &nbsp<span
+                            th:text="${essayDTO.getViewCount()}"></span> view &nbsp </span> <span th:text="${#dates.format(essayDTO.getGmtCreate(),'dd MMMM yyyy')}"></span> </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>Hot Topic</h3>
+            Hot
+        </div>
+    </div>
+</div>
 </body>
 </html>
