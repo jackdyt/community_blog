@@ -54,7 +54,7 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Find What's New</h2>
             <hr>
-            <div class="media" th:each="essayDTO: ${essays}">
+            <div class="media" th:each="essayDTO: ${pageDTO.essayDTOs}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded" th:src="${essayDTO.user.getAvatarUrl()}" >
@@ -67,7 +67,34 @@
                             th:text="${essayDTO.getViewCount()}"></span> view &nbsp </span> <span th:text="${#dates.format(essayDTO.getGmtCreate(),'dd MMMM yyyy')}"></span> </span>
                 </div>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pageDTO.showFirstPage}">
+                        <a href="/?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pageDTO.showPrev}">
+                        <a th:href="@{/(page=${pageDTO.getPage()}-1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page: ${pageDTO.pages}" th:class="${pageDTO.page==page} ? 'active':''"><a
+                            th:href="@{/(page=${page})}"  th:text="${page}" >
 
+                    </a></li>
+                    <li th:if="${pageDTO.showNext}">
+                        <a th:href="@{/(page=${pageDTO.getPage()}+1)}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pageDTO.showFinalPage}">
+                        <a th:href="@{/(page=${pageDTO.getPageNeed()})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>Hot Topic</h3>

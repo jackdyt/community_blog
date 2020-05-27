@@ -3,6 +3,7 @@ package com.jackdyt.blog.mapper;
 import com.jackdyt.blog.model.Essay;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,9 @@ public interface EssayMapper {
     @Insert("insert into COMMUNITY_BLOG.BLOG.ESSAY(title, description, gmt_create, gmt_modified, creator) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator})")
     public void create(Essay essay);
 
-    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY ")
-    List<Essay> list();
+    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY limit #{offset}, #{size}")
+    List<Essay> list(@Param("offset") Integer offset, @Param("size") Integer size);
+
+    @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY")
+    Integer count();
 }
