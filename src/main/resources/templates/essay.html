@@ -25,7 +25,7 @@
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${essay.getDescription()}"></div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a th:href="@{'publish/'+${essay.getId()}}" class="blog-menu" th:if="${session.user != null && session.user.getId() == essay.getCreator()}">
+            <a th:href="@{'/publish/'+${essay.getId()}}" class="blog-menu" th:if="${session.user != null && session.user.getId() == essay.getCreator()}">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 Edit
             </a>

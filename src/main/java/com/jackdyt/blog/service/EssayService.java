@@ -92,4 +92,15 @@ public class EssayService {
         essayDTO.setUser(user);
         return essayDTO;
     }
+
+    public void createOrUpdate(Essay essay) {
+        if(essay.getId() == null){
+            essay.setGmtCreate(System.currentTimeMillis());
+            essay.setGmtModified(essay.getGmtCreate());
+            essayMapper.create(essay);
+        }else{
+            essay.setGmtModified(System.currentTimeMillis());
+            essayMapper.update(essay);
+        }
+    }
 }

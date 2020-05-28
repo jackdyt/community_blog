@@ -2,10 +2,7 @@ package com.jackdyt.blog.mapper;
 
 import com.jackdyt.blog.dto.EssayDTO;
 import com.jackdyt.blog.model.Essay;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EssayMapper {
-    @Insert("insert into COMMUNITY_BLOG.BLOG.ESSAY(title, description, gmt_create, gmt_modified, creator) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator})")
+    @Insert("insert into COMMUNITY_BLOG.BLOG.ESSAY(title, description, gmt_create, gmt_modified, creator, tag) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator}, #{tag})")
     public void create(Essay essay);
 
     @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY limit #{offset}, #{size}")
@@ -30,4 +27,7 @@ public interface EssayMapper {
 
     @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY where id=#{id}")
     Essay getById(@Param("id") Integer id);
+
+    @Update("update COMMUNITY_BLOG.BLOG.ESSAY set title = #{title}, description = #{description}, tag = #{tag}, gmt_modified = #{gmtModified} where id = #{id}")
+    void update(Essay essay);
 }
