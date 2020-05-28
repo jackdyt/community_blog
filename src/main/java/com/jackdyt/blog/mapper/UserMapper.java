@@ -1,10 +1,7 @@
 package com.jackdyt.blog.mapper;
 
 import com.jackdyt.blog.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -18,4 +15,10 @@ public interface UserMapper {
 
     @Select("select * from  COMMUNITY_BLOG.BLOG.USER where id= #{id}")
     User findById(@Param("id") Integer id);
+
+    @Select("select * from  COMMUNITY_BLOG.BLOG.USER where account_id= #{accountId}")
+    User findByAccoountId(@Param("accountId")String accountId);
+
+    @Update("update COMMUNITY_BLOG.BLOG.USER set name = #{name}, token=#{token}, gmt_modified = #{gmtModified}, avatar_url = #{avatarUrl} where account_id=#{accountId} ")
+    void update(User user);
 }

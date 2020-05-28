@@ -5,6 +5,7 @@ import com.jackdyt.blog.dto.GithubUser;
 import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.provider.GithubProvider;
+import com.jackdyt.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,8 +30,9 @@ public class AuthController {
     @Value("${github.client.redirect_uri}")
     private String redirect_uri;
 
+
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
@@ -51,10 +53,8 @@ public class AuthController {
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            userService.check(user);
             response.addCookie(new Cookie("token", token));
             //request.getSession().setAttribute("user", githubUser);
             return "redirect:/index";
@@ -62,6 +62,15 @@ public class AuthController {
             return "redirect:/index";
         }
 
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/index";
     }
 }
 

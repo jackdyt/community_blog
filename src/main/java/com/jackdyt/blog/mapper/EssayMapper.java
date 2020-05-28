@@ -1,5 +1,6 @@
 package com.jackdyt.blog.mapper;
 
+import com.jackdyt.blog.dto.EssayDTO;
 import com.jackdyt.blog.model.Essay;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,4 +27,7 @@ public interface EssayMapper {
 
     @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY where creator=#{userId}")
     Integer countByUserId(@Param("userId") Integer userId);
+
+    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY where id=#{id}")
+    Essay getById(@Param("id") Integer id);
 }

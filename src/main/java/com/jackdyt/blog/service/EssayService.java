@@ -83,4 +83,13 @@ public class EssayService {
 
         return pageDTO;
     }
+
+    public EssayDTO getById(Integer id) {
+        Essay essay = essayMapper.getById(id);
+        EssayDTO essayDTO = new EssayDTO();
+        User user = userMapper.findById(essay.getCreator());
+        BeanUtils.copyProperties(essay, essayDTO);
+        essayDTO.setUser(user);
+        return essayDTO;
+    }
 }
