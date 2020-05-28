@@ -48,4 +48,39 @@ public class EssayService {
 
         return pageDTO;
     }
+
+    public PageDTO list(Integer userId, Integer page, Integer size) {
+        Integer total = essayMapper.countByUserId(userId);
+        PageDTO pageDTO = new PageDTO();
+        Integer pageNeed;
+        if(total % size == 0){
+            pageNeed = total / size;
+        }else{
+            pageNeed = total / size + 1;
+        }
+        if (page < 1){
+            page = 1;
+        }
+        if (page > pageNeed){
+            page = pageNeed;
+        }
+        pageDTO.setPageInit(total, page, size);
+
+        Integer offset = size*(page-1);
+        List<Essay> essays = essayMapper.listByUserId(userId, offset, size);
+        List<EssayDTO> essayDTOList = new ArrayList<>();
+
+
+        for (Essay essay: essays){
+            User user = userMapper.findById(essay.getCreator());
+            EssayDTO essayDTO = new EssayDTO();
+            BeanUtils.copyProperties(essay, essayDTO);
+            essayDTO.setUser(user);
+            essayDTOList.add(essayDTO);
+        }
+        pageDTO.setEssayDTOs(essayDTOList);
+
+
+        return pageDTO;
+    }
 }

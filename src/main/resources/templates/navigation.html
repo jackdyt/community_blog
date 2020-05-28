@@ -11,7 +11,7 @@
                     <span class="sr-only">Jack's Blog</span>
 
                 </button>
-                <a class="navbar-brand" href="#">Jack's Blog</a>
+                <a class="navbar-brand" href="/index">Jack's Blog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,9 +32,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile/post">My Post</a></li>
+                            <li><a href="/profile/posts">My Post</a></li>
                             <!--                        <li><a href="#">Your profile</a></li>-->
-                            <li><a href="#">Logout</a></li>
+                            <li><a href="/profile/replies">Latest Reply</a></li>
                         </ul>
                     </li>
                     <li th:if="${session.user==null}">

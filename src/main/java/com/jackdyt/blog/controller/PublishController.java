@@ -1,7 +1,6 @@
 package com.jackdyt.blog.controller;
 
 import com.jackdyt.blog.mapper.EssayMapper;
-import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +22,13 @@ public class PublishController {
 
     @Autowired
     private EssayMapper essayMapper;
-    @Autowired
-    private UserMapper userMapper;
+
     @PostMapping("/publish")
     public String doPublish(@RequestParam("title") String title,
                             @RequestParam("description") String description,
                             @RequestParam("tag") String tag, HttpServletRequest request, Model model){
-        Cookie[] cookies = request.getCookies();
-        User user = null;
-        if (cookies != null && cookies.length != 0){
-            for (Cookie cookie:cookies){
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    user =  userMapper.findByToken(token);
-                    if (user != null){
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+
+        User user = (User) request.getSession().getAttribute("user");
         if (user==null){
             model.addAttribute("error", "Please login");
             return "publish";

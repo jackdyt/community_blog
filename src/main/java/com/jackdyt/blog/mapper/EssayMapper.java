@@ -20,4 +20,10 @@ public interface EssayMapper {
 
     @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY")
     Integer count();
+
+    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY where creator=#{userId} limit #{offset}, #{size}")
+    List<Essay> listByUserId(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("size") Integer size);
+
+    @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY where creator=#{userId}")
+    Integer countByUserId(@Param("userId") Integer userId);
 }
