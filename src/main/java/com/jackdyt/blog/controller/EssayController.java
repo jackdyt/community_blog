@@ -1,7 +1,6 @@
 package com.jackdyt.blog.controller;
 
 import com.jackdyt.blog.dto.EssayDTO;
-import com.jackdyt.blog.mapper.EssayMapper;
 import com.jackdyt.blog.service.EssayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,9 @@ public class EssayController {
 
     @GetMapping("/essay/{id}")
     public String essay(@PathVariable(name = "id") Integer id, Model model){
+        essayService.increaseView(id);
         EssayDTO essayDTO = essayService.getById(id);
+
         model.addAttribute("essay", essayDTO);
         return "essay";
     }

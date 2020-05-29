@@ -5,6 +5,7 @@ import com.jackdyt.blog.dto.PageDTO;
 import com.jackdyt.blog.exception.CustomizeErrorCode;
 import com.jackdyt.blog.exception.CustomizeException;
 import com.jackdyt.blog.mapper.EssayMapper;
+import com.jackdyt.blog.mapper.EssayMapperExtension;
 import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.EssayExample;
@@ -23,6 +24,9 @@ public class EssayService {
     private UserMapper userMapper;
     @Autowired
     private EssayMapper essayMapper;
+    @Autowired
+    private EssayMapperExtension essayMapperExtension;
+
 
     public PageDTO list(Integer page, Integer size) {
         Integer total = (int) essayMapper.countByExample(new EssayExample());
@@ -125,4 +129,12 @@ public class EssayService {
             }
         }
     }
+
+    public void increaseView(Integer id) {
+        Essay essay = new Essay();
+        essay.setId(id);
+        essay.setViewCount(1);
+        essayMapperExtension.incView(essay);
+    }
+
 }
