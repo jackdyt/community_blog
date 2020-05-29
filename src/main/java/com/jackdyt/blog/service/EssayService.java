@@ -37,7 +37,7 @@ public class EssayService {
 
 
         for (Essay essay: essays){
-            User user = userMapper.findById(essay.getCreator());
+            User user = userMapper.selectByPrimaryKey(essay.getCreator());
             EssayDTO essayDTO = new EssayDTO();
             BeanUtils.copyProperties(essay, essayDTO);
             essayDTO.setUser(user);
@@ -72,7 +72,7 @@ public class EssayService {
 
 
         for (Essay essay: essays){
-            User user = userMapper.findById(essay.getCreator());
+            User user = userMapper.selectByPrimaryKey(essay.getCreator());
             EssayDTO essayDTO = new EssayDTO();
             BeanUtils.copyProperties(essay, essayDTO);
             essayDTO.setUser(user);
@@ -87,7 +87,7 @@ public class EssayService {
     public EssayDTO getById(Integer id) {
         Essay essay = essayMapper.getById(id);
         EssayDTO essayDTO = new EssayDTO();
-        User user = userMapper.findById(essay.getCreator());
+        User user = userMapper.selectByPrimaryKey(essay.getCreator());
         BeanUtils.copyProperties(essay, essayDTO);
         essayDTO.setUser(user);
         return essayDTO;
