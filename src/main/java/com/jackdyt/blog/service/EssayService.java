@@ -2,6 +2,8 @@ package com.jackdyt.blog.service;
 
 import com.jackdyt.blog.dto.EssayDTO;
 import com.jackdyt.blog.dto.PageDTO;
+import com.jackdyt.blog.exception.CustomizeErrorCode;
+import com.jackdyt.blog.exception.CustomizeException;
 import com.jackdyt.blog.mapper.EssayMapper;
 import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.Essay;
@@ -93,6 +95,9 @@ public class EssayService {
 
     public EssayDTO getById(Integer id) {
         Essay essay = essayMapper.selectByPrimaryKey(id);
+        if (essay == null){
+            throw new CustomizeException(CustomizeErrorCode.ESSAY_NOT_FOUND);
+        }
         EssayDTO essayDTO = new EssayDTO();
         User user = userMapper.selectByPrimaryKey(essay.getCreator());
         BeanUtils.copyProperties(essay, essayDTO);
@@ -114,7 +119,10 @@ public class EssayService {
             updateEssay.setTag(essay.getTag());
             EssayExample example = new EssayExample();
             example.createCriteria().andIdEqualTo(essay.getId());
-            essayMapper.updateByExampleSelective(updateEssay, example);
+            int updateRes = essayMapper.updateByExampleSelective(updateEssay, example);
+            if (updateRes!=1){
+                throw new CustomizeException(CustomizeErrorCode.ESSAY_NOT_FOUND);
+            }
         }
     }
 }
