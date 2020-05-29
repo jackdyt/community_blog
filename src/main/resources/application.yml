@@ -9,10 +9,10 @@ github:
 
 spring:
   datasource:
-    url: jdbc:h2:~/community_blog
-    username: sa
-    password: 123
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: welcomejack
+    driver-class-name: com.mysql.jdbc.Driver
 
 mybatis:
   configuration:

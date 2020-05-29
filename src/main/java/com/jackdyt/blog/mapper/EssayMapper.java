@@ -10,24 +10,24 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EssayMapper {
-    @Insert("insert into COMMUNITY_BLOG.BLOG.ESSAY(title, description, gmt_create, gmt_modified, creator, tag) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator}, #{tag})")
+    @Insert("insert into blog.essay(title, description, gmt_create, gmt_modified, creator, tag) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator}, #{tag})")
     public void create(Essay essay);
 
-    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY limit #{offset}, #{size}")
+    @Select("select * from blog.essay limit #{offset}, #{size}")
     List<Essay> list(@Param("offset") Integer offset, @Param("size") Integer size);
 
-    @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY")
+    @Select("select count(1) from blog.essay")
     Integer count();
 
-    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY where creator=#{userId} limit #{offset}, #{size}")
+    @Select("select * from blog.essay where creator=#{userId} limit #{offset}, #{size}")
     List<Essay> listByUserId(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("size") Integer size);
 
-    @Select("select count(1) from COMMUNITY_BLOG.BLOG.ESSAY where creator=#{userId}")
+    @Select("select count(1) from blog.essay where creator=#{userId}")
     Integer countByUserId(@Param("userId") Integer userId);
 
-    @Select("select * from COMMUNITY_BLOG.BLOG.ESSAY where id=#{id}")
+    @Select("select * from blog.essay where id=#{id}")
     Essay getById(@Param("id") Integer id);
 
-    @Update("update COMMUNITY_BLOG.BLOG.ESSAY set title = #{title}, description = #{description}, tag = #{tag}, gmt_modified = #{gmtModified} where id = #{id}")
+    @Update("update blog.essay set title = #{title}, description = #{description}, tag = #{tag}, gmt_modified = #{gmtModified} where id = #{id}")
     void update(Essay essay);
 }
