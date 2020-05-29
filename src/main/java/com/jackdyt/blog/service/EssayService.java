@@ -5,7 +5,9 @@ import com.jackdyt.blog.dto.PageDTO;
 import com.jackdyt.blog.mapper.EssayMapper;
 import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.Essay;
+import com.jackdyt.blog.model.EssayExample;
 import com.jackdyt.blog.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,22 +23,22 @@ public class EssayService {
     private EssayMapper essayMapper;
 
     public PageDTO list(Integer page, Integer size) {
-        Integer total = essayMapper.count();
+        Integer total = (int) essayMapper.countByExample(new EssayExample());
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPageInit(total, page, size);
 
-        if (page > pageDTO.getPageNeed()){
+        if (page > pageDTO.getPageNeed()) {
             page = pageDTO.getPageNeed();
         }
-        if (page < 1){
+        if (page < 1) {
             page = 1;
         }
-        Integer offset = size*(page-1);
-        List<Essay> essays = essayMapper.list(offset,size);
+        Integer offset = size * (page - 1);
+        List<Essay> essays = essayMapper.selectByExampleWithRowbounds(new EssayExample(), new RowBounds(offset,size));
         List<EssayDTO> essayDTOList = new ArrayList<>();
 
 
-        for (Essay essay: essays){
+        for (Essay essay : essays) {
             User user = userMapper.selectByPrimaryKey(essay.getCreator());
             EssayDTO essayDTO = new EssayDTO();
             BeanUtils.copyProperties(essay, essayDTO);
@@ -50,28 +52,33 @@ public class EssayService {
     }
 
     public PageDTO list(Integer userId, Integer page, Integer size) {
-        Integer total = essayMapper.countByUserId(userId);
+        EssayExample essayExample = new EssayExample();
+        essayExample.createCriteria().andCreatorEqualTo(userId);
+        Integer total = (int) essayMapper.countByExample(essayExample);
         PageDTO pageDTO = new PageDTO();
         Integer pageNeed;
-        if(total % size == 0){
+        if (total % size == 0) {
             pageNeed = total / size;
-        }else{
+        } else {
             pageNeed = total / size + 1;
         }
-        if (page < 1){
+        if (page < 1) {
             page = 1;
         }
-        if (page > pageNeed){
+        if (page > pageNeed) {
             page = pageNeed;
         }
         pageDTO.setPageInit(total, page, size);
 
-        Integer offset = size*(page-1);
-        List<Essay> essays = essayMapper.listByUserId(userId, offset, size);
+        Integer offset = size * (page - 1);
+        EssayExample example = new EssayExample();
+        example.createCriteria().andCreatorEqualTo(userId);
+        List<Essay> essays = essayMapper.selectByExampleWithRowbounds(example, new RowBounds(offset,size));
+
         List<EssayDTO> essayDTOList = new ArrayList<>();
 
 
-        for (Essay essay: essays){
+        for (Essay essay : essays) {
             User user = userMapper.selectByPrimaryKey(essay.getCreator());
             EssayDTO essayDTO = new EssayDTO();
             BeanUtils.copyProperties(essay, essayDTO);
@@ -85,7 +92,7 @@ public class EssayService {
     }
 
     public EssayDTO getById(Integer id) {
-        Essay essay = essayMapper.getById(id);
+        Essay essay = essayMapper.selectByPrimaryKey(id);
         EssayDTO essayDTO = new EssayDTO();
         User user = userMapper.selectByPrimaryKey(essay.getCreator());
         BeanUtils.copyProperties(essay, essayDTO);
@@ -94,13 +101,20 @@ public class EssayService {
     }
 
     public void createOrUpdate(Essay essay) {
-        if(essay.getId() == null){
+        if (essay.getId() == null) {
             essay.setGmtCreate(System.currentTimeMillis());
             essay.setGmtModified(essay.getGmtCreate());
-            essayMapper.create(essay);
-        }else{
-            essay.setGmtModified(System.currentTimeMillis());
-            essayMapper.update(essay);
+            essayMapper.insert(essay);
+        } else {
+
+            Essay updateEssay = new Essay();
+            updateEssay.setGmtModified(System.currentTimeMillis());
+            updateEssay.setTitle(essay.getTitle());
+            updateEssay.setDescription(essay.getDescription());
+            updateEssay.setTag(essay.getTag());
+            EssayExample example = new EssayExample();
+            example.createCriteria().andIdEqualTo(essay.getId());
+            essayMapper.updateByExampleSelective(updateEssay, example);
         }
     }
 }
