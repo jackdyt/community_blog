@@ -14,10 +14,10 @@ public class EssayController {
     private EssayService essayService;
 
     @GetMapping("/essay/{id}")
-    public String essay(@PathVariable(name = "id") Integer id, Model model){
-        essayService.increaseView(id);
-        EssayDTO essayDTO = essayService.getById(id);
+    public String essay(@PathVariable(name = "id") Long id, Model model){
 
+        EssayDTO essayDTO = essayService.getById(id);
+        essayService.increaseView(id);
         model.addAttribute("essay", essayDTO);
         return "essay";
     }

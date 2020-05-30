@@ -18,6 +18,10 @@ body{
     height: 40px;
 }
 
+.media-body{
+    padding-top: 11px;
+}
+
 .profile .section{
     margin-top: 15px;
 }
@@ -29,4 +33,13 @@ body{
 
 .jumbotron{
     margin: 45px;
+}
+
+.comment{
+    margin: 10px;
+}
+
+.comment-button{
+    float: right;
+    margin-bottom: 10px;
 }

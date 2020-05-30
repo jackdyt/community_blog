@@ -1,7 +1,6 @@
 package com.jackdyt.blog.controller;
 
 import com.jackdyt.blog.dto.EssayDTO;
-import com.jackdyt.blog.mapper.EssayMapper;
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.service.EssayService;
@@ -31,7 +30,7 @@ public class PublishController {
     public String doPublish(@RequestParam("title") String title,
                             @RequestParam("description") String description,
                             @RequestParam("tag") String tag, HttpServletRequest request,
-                            @RequestParam("id") Integer id,
+                            @RequestParam("id") Long id,
                             Model model){
 
         User user = (User) request.getSession().getAttribute("user");
@@ -52,7 +51,7 @@ public class PublishController {
 
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable(name = "id") Integer id, Model model){
+    public String edit(@PathVariable(name = "id") Long id, Model model){
         EssayDTO essay = essayService.getById(id);
         model.addAttribute("title", essay.getTitle());
         model.addAttribute("description", essay.getDescription());

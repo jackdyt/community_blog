@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="css/blog.css">
 
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        if (window.localStorage.getItem("closeOrNot") == "true"){
+            window.close();
+            window.localStorage.removeItem("closeOrNot");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 

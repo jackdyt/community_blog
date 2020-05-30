@@ -57,7 +57,7 @@ public class EssayService {
         return pageDTO;
     }
 
-    public PageDTO list(Integer userId, Integer page, Integer size) {
+    public PageDTO list(Long userId, Integer page, Integer size) {
         EssayExample essayExample = new EssayExample();
         essayExample.createCriteria().andCreatorEqualTo(userId);
         Integer total = (int) essayMapper.countByExample(essayExample);
@@ -97,7 +97,7 @@ public class EssayService {
         return pageDTO;
     }
 
-    public EssayDTO getById(Integer id) {
+    public EssayDTO getById(Long id) {
         Essay essay = essayMapper.selectByPrimaryKey(id);
         if (essay == null){
             throw new CustomizeException(CustomizeErrorCode.ESSAY_NOT_FOUND);
@@ -130,7 +130,7 @@ public class EssayService {
         }
     }
 
-    public void increaseView(Integer id) {
+    public void increaseView(Long id) {
         Essay essay = new Essay();
         essay.setId(id);
         essay.setViewCount(1);
