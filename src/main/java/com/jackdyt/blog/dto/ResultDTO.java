@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultDTO {
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private T data;
 
     public static ResultDTO errorCausedBy(Integer code, String message){
         ResultDTO resultDTO = new ResultDTO();
@@ -34,6 +35,14 @@ public class ResultDTO {
         resultDTO.setMessage("successful");
         return resultDTO;
     }
+    public static <T> ResultDTO  success(T t){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(4599);
+        resultDTO.setMessage("successful");
+        resultDTO.setData(t);
+        return resultDTO;
+    }
+
 
 
 }

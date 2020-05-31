@@ -40,7 +40,9 @@ public class EssayService {
             page = 1;
         }
         Integer offset = size * (page - 1);
-        List<Essay> essays = essayMapper.selectByExampleWithRowbounds(new EssayExample(), new RowBounds(offset,size));
+        EssayExample essayExample = new EssayExample();
+        essayExample.setOrderByClause("gmt_create desc");
+        List<Essay> essays = essayMapper.selectByExampleWithRowbounds(essayExample, new RowBounds(offset,size));
         List<EssayDTO> essayDTOList = new ArrayList<>();
 
 

@@ -59,3 +59,10 @@ body{
     margin-bottom: 15px;
     border-bottom: 1px solid;
 }
+
+.second_level_comment{
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid;
+    padding-top: 10px;
+}

@@ -1,8 +1,8 @@
 package com.jackdyt.blog.controller;
 
 import com.jackdyt.blog.dto.CommentDTO;
-import com.jackdyt.blog.dto.CommentGetDTO;
 import com.jackdyt.blog.dto.EssayDTO;
+import com.jackdyt.blog.enums.CommentType;
 import com.jackdyt.blog.service.CommentService;
 import com.jackdyt.blog.service.EssayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class EssayController {
     public String essay(@PathVariable(name = "id") Long id, Model model){
 
         EssayDTO essayDTO = essayService.getById(id);
-        List<CommentDTO> commentDTOs = commentService.listByQuestionId(id);
+        List<CommentDTO> commentDTOs = commentService.listByTargetId(id, CommentType.QUESTION);
         essayService.increaseView(id);
         model.addAttribute("essay", essayDTO);
         model.addAttribute("comments", commentDTOs);

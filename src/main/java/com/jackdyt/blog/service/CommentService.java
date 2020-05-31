@@ -4,10 +4,7 @@ import com.jackdyt.blog.dto.CommentDTO;
 import com.jackdyt.blog.enums.CommentType;
 import com.jackdyt.blog.exception.CustomizeErrorCode;
 import com.jackdyt.blog.exception.CustomizeException;
-import com.jackdyt.blog.mapper.CommentMapper;
-import com.jackdyt.blog.mapper.EssayMapper;
-import com.jackdyt.blog.mapper.EssayMapperExtension;
-import com.jackdyt.blog.mapper.UserMapper;
+import com.jackdyt.blog.mapper.*;
 import com.jackdyt.blog.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,8 @@ public class CommentService {
     private EssayMapperExtension essayMapperExtension;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentMapperExtension commentMapperExtension;
 
     @Transactional
     public void insert(Comment comment) {
@@ -45,6 +44,11 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //increase the comment count
+            Comment parentComment = new Comment();
+            parentComment.setCommentCount(1);
+            parentComment.setId(comment.getParentId());
+            commentMapperExtension.incComment(parentComment);
 
         }else{
             Essay essay = essayMapper.selectByPrimaryKey(comment.getParentId());
@@ -58,10 +62,10 @@ public class CommentService {
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Long id) {
+    public List<CommentDTO> listByTargetId(Long id, CommentType type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria().andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentType.QUESTION.getType());
+                .andTypeEqualTo(type.getType());
         commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
         if (comments.size() == 0){
