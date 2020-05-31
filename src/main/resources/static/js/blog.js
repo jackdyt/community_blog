@@ -3,6 +3,10 @@ function post(){
     var commentContent = $("#commentContent").val();
     // console.log(questionId);
     // console.log(commentContent);
+    if (!commentContent){
+        alert("Content cannot be empty.");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "/comment",
@@ -14,6 +18,7 @@ function post(){
         success: function (response) {
             if (response.code === 4599){
                 $("#commentSection").hide();
+                window.location.reload();
             }else if(response.code === 2003){
                 var conf = confirm(response.message);
                 if(conf){
@@ -21,7 +26,7 @@ function post(){
                     window.localStorage.setItem("closeOrNot", "true");
                 }
             }else{
-                alert(response.code);
+                alert(response.message);
             }
             console.log(response);
         },

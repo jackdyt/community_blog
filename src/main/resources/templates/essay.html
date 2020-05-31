@@ -17,14 +17,15 @@
 <div class="container-fluid main" profile>
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <!--            main description-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4><span th:text="${essay.getTitle()}"></span></h4>
+                <h4><span th:text="${essay.getTitle()}" style="margin-top: 25px"></span></h4>
                 <span class="text-desc">
                 Author: <span th:text="${essay.user.getAccountId()}"></span> |
                 View: <span th:text="${essay.getViewCount()}"></span> |
                 Publish Time:<span th:text="${#dates.format(essay.getGmtCreate(),'dd MMMM yyyy')}"></span>
             </span>
-                <hr>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${essay.getDescription()}"></div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <a th:href="@{'/publish/'+${essay.getId()}}" class="blog-menu"
@@ -33,23 +34,60 @@
                     Edit
                 </a>
             </div>
-            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="commentSection">
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" th:src="${essay.user.getAvatarUrl()}">
-                        </a>
+
+            <!--            comments-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>
+                    <span th:text="${essay.getCommentCount()}"></span> response
+                </h4>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 0px">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments" th:each="comment: ${comments}">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" th:src="${comment.user.getAvatarUrl()}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">
+                                <span th:text="${comment.user.getAccountId()}"></span>
+                            </h5>
+                            <div th:text="${comment.getContent()}"></div>
+                            <div class="icon_menu">
+                                <span class="glyphicon glyphicon-thumbs-up icon" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-check icon" aria-hidden="true"></span>
+                                <span class="pull-right"
+                                      th:text="${#dates.format(comment.getGmtCreate(),'dd MMMM yyyy')}"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="media-body">
-                        <h5 class="media-heading">
-                            <span th:text="${essay.user.getAccountId()}"></span>
-                        </h5>
-                    </div>
+
                 </div>
-                <input type="hidden" id="questionId" th:value="${essay.getId()}">
-                <textarea class="form-control" rows="10" id="commentContent"></textarea>
-                <button type="button" class="btn btn-success comment-button" onclick="post()">Submit</button>
+            </div>
+
+            <!--            response test area-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>
+                    Submit your comment
+                </h4>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment" >
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="commentSection">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" th:src="${essay.user.getAvatarUrl()}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">
+                                <span th:text="${essay.user.getAccountId()}"></span>
+                            </h5>
+                        </div>
+                    </div>
+                    <input type="hidden" id="questionId" th:value="${essay.getId()}">
+                    <textarea class="form-control" rows="10" id="commentContent"></textarea>
+                    <button type="button" class="btn btn-success comment-button" onclick="post()">Submit</button>
+                </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">

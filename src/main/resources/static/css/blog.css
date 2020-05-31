@@ -43,3 +43,19 @@ body{
     float: right;
     margin-bottom: 10px;
 }
+
+.icon_menu{
+    color: #2aabd2;
+    margin-top: 6px;
+}
+
+.icon_menu.icon{
+    color: #761c19;
+    font-size: 12px;
+}
+
+.comments{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid;
+}

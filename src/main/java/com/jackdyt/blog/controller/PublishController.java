@@ -44,6 +44,9 @@ public class PublishController {
         essay.setCreator(user.getId());
         essay.setTag(tag);
         essay.setId(id);
+        essay.setViewCount(0);
+        essay.setCommentCount(0);
+        essay.setLikeCount(0);
         essayService.createOrUpdate(essay);
 
         return "redirect:/index";

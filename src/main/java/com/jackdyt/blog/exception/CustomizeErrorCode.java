@@ -6,7 +6,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     NOT_LOGIN(2003,"Please login first."),
     SYSTEM_ERROR(2004,"Something happened in servers."),
     TYPE_PARENT_WRONG(2005, "Comment type is wrong."),
-    COMMENT_NOT_FOUND(2006, "Comment doesn't exist.");
+    COMMENT_NOT_FOUND(2006, "Comment doesn't exist."),
+    CONTENT_EMPTY(2007, "Content cannot be empty.");
     private String message;
     private Integer code;
 

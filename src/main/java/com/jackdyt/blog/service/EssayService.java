@@ -113,6 +113,9 @@ public class EssayService {
         if (essay.getId() == null) {
             essay.setGmtCreate(System.currentTimeMillis());
             essay.setGmtModified(essay.getGmtCreate());
+            essay.setCommentCount(0);
+            essay.setViewCount(0);
+            essay.setLikeCount(0);
             essayMapper.insert(essay);
         } else {
 
