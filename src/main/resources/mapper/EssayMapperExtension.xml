@@ -25,4 +25,11 @@
     comment_count = comment_count+#{commentCount,jdbcType=INTEGER}
     where id = #{id}
   </update>
+
+  <select id="selectRelatedTag" parameterType="com.jackdyt.blog.model.Essay" resultMap="BaseResultMap">
+
+    select *
+    from essay
+    where id != #{id,jdbcType=BIGINT} and tag regexp #{tag}
+  </select>
 </mapper>

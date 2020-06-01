@@ -1,8 +1,6 @@
 package com.jackdyt.blog.mapper;
 
 import com.jackdyt.blog.model.Essay;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,4 +9,5 @@ import java.util.List;
 public interface EssayMapperExtension {
     int incView(Essay record);
     int incComment(Essay record);
+    List<Essay> selectRelatedTag(Essay essay);
 }

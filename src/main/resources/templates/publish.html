@@ -8,6 +8,7 @@
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/css/blog.css">
+    <script src="/js/blog.js"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -30,9 +31,28 @@
                     <textarea name="description" id="description" class="form-control" th:text="${description}" rows="10" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="tag">Description</label>
-                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="type in tag, separate by ," required>
+                    <label for="tag">Tag</label>
+                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="type in tag, separate by ," onclick="showTags()" required>
+                    <div id="allTags">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="tagCategory:${tags}">
+                                <a th:href="${'#'+tagCategory.getCategoryName()}" aria-controls="home" role="tab" data-toggle="tab" th:text="${tagCategory.getCategoryName()}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" >
+                            <div role="tabpanel" class="tab-pane" th:id="${tagCategory.getCategoryName()}" th:each="tagCategory:${tags}" >
+                                <span>
+                                    <span class="label label-info" th:each="selectTag:${tagCategory.tags}">
+                                    <span class="glyphicon glyphicon-tag" onclick="selectTag(this)"
+                                          th:data-tag="${selectTag}" th:text="${' '+selectTag}"></span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
 
                 <div class="container-fluid main ">
                     <div class="row">

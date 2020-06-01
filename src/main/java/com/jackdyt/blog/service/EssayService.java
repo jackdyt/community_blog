@@ -10,6 +10,7 @@ import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.EssayExample;
 import com.jackdyt.blog.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EssayService {
@@ -142,4 +144,21 @@ public class EssayService {
         essayMapperExtension.incView(essay);
     }
 
+    public List<EssayDTO> selectRelated(EssayDTO essayDTO) {
+        if(StringUtils.isBlank(essayDTO.getTag())){
+            return  new ArrayList<>();
+        }
+        String[] tags = StringUtils.split(essayDTO.getTag(), ",");
+        String regex = String.join("|", tags);
+        Essay essay = new Essay();
+        essay.setId(essayDTO.getId());
+        essay.setTag(essayDTO.getTag());
+        List<Essay> essays = essayMapperExtension.selectRelatedTag(essay);
+        List<EssayDTO> essayDTOS = essays.stream().map(e->{
+            EssayDTO essayDTOTmp = new EssayDTO();
+            BeanUtils.copyProperties(e, essayDTOTmp);
+            return essayDTOTmp;
+        }).collect(Collectors.toList());
+        return essayDTOS;
+    }
 }

@@ -110,6 +110,8 @@
                 </div>
             </div>
         </div>
+
+<!--        right part-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>Poster</h4>
@@ -126,9 +128,22 @@
                     </div>
                 </div>
             </div>
-            <hr>
+<!--            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+<!--            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+<!--                <h4>Nice Image</h4>-->
+<!--                <img class="img-thumbnail" src="img/fgo.png"  >-->
+<!--            </div>-->
+
+<!--            related posts-->
+
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>Related Posts</h4>
+                <ul >
+                    <li th:each="relatedEssay:${relatedEssays}" >
+                        <a th:href="@{'/essay/'+${relatedEssay.getId()}}" th:text="${relatedEssay.getTitle()}" style="padding-left: 1px"></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

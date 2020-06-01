@@ -25,10 +25,18 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${essayDTO.getTitle()}"></h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/essay/'+ ${essayDTO.getId()}}"  th:text="${essayDTO.getTitle()}"></a>
+                    </h4>
                     <span th:text="${essayDTO.getDescription()}"></span>
                     <span class="text-desc"> <span th:text="${essayDTO.getCommentCount()}"></span> response &nbsp<span
-                            th:text="${essayDTO.getViewCount()}"></span> view &nbsp </span> <span th:text="${#dates.format(essayDTO.getGmtCreate(),'dd MMMM yyyy')}"></span> </span>
+                            th:text="${essayDTO.getViewCount()}"></span> view &nbsp </span> <span th:text="${#dates.format(essayDTO.getGmtCreate(),'dd MMMM yyyy')}"></span>
+                    <a th:href="@{'/publish/'+${essayDTO.getId()}}" class="blog-menu"
+                       th:if="${session.user != null && session.user.getId() == essayDTO.getCreator()}">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        Edit
+                    </a>
+                    </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">

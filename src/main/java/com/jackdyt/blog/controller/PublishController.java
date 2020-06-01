@@ -1,5 +1,6 @@
 package com.jackdyt.blog.controller;
 
+import com.jackdyt.blog.cache.TagCache;
 import com.jackdyt.blog.dto.EssayDTO;
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.User;
@@ -18,7 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublishController {
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -32,12 +34,17 @@ public class PublishController {
                             @RequestParam("tag") String tag, HttpServletRequest request,
                             @RequestParam("id") Long id,
                             Model model){
-
+        model.addAttribute("tags", TagCache.get());
         User user = (User) request.getSession().getAttribute("user");
         if (user==null){
             model.addAttribute("error", "Please login");
             return "publish";
         }
+        if (!TagCache.validTag(tag)){
+            model.addAttribute("error", "Invalid tag. Please choose from the list.");
+            return "publish";
+        }
+
         Essay essay = new Essay();
         essay.setTitle(title);
         essay.setDescription(description);
@@ -48,6 +55,7 @@ public class PublishController {
         essay.setCommentCount(0);
         essay.setLikeCount(0);
         essayService.createOrUpdate(essay);
+
 
         return "redirect:/index";
     }
@@ -60,6 +68,8 @@ public class PublishController {
         model.addAttribute("description", essay.getDescription());
         model.addAttribute("tag", essay.getTag());
         model.addAttribute("id", id);
+        model.addAttribute("tags", TagCache.get());
+
         return "publish";
 
     }

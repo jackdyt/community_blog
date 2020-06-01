@@ -110,3 +110,20 @@ function showOrCollapse(e) {
         }
     }
 }
+function showTags() {
+    $("#allTags").show();
+}
+
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var existed = $("#tag").val();
+    if (existed.indexOf(value) == -1){
+        if (existed){
+            $("#tag").val(existed+','+value);
+        }else{
+            $("#tag").val(value);
+        }
+    }
+
+}

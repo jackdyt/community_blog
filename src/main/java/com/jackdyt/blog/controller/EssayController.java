@@ -21,12 +21,13 @@ public class EssayController {
     private CommentService commentService;
     @GetMapping("/essay/{id}")
     public String essay(@PathVariable(name = "id") Long id, Model model){
-
         EssayDTO essayDTO = essayService.getById(id);
+        List<EssayDTO> relatedEssay = essayService.selectRelated(essayDTO);
         List<CommentDTO> commentDTOs = commentService.listByTargetId(id, CommentType.QUESTION);
         essayService.increaseView(id);
         model.addAttribute("essay", essayDTO);
         model.addAttribute("comments", commentDTOs);
+        model.addAttribute("relatedEssays", relatedEssay);
         return "essay";
     }
 }
