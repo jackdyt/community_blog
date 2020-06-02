@@ -40,41 +40,43 @@
                             width  : "100%",
                             height : 400,
                             path   : "/js/lib/",
-                            imageUpload: true
-
-
+                            imageUpload: true,
+                            imageFormats: ["jpg","jpeg","png","bmp","webp"],
+                            imageUploadURL: "/file/upload"
                         });
                     });
                 </script>
                 <div class="form-group">
-                    <label for="tag">Tag</label>
-                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="type in tag, separate by ," onclick="showTags()" required>
-                    <div id="allTags">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" th:each="tagCategory:${tags}">
-                                <a th:href="${'#'+tagCategory.getCategoryName()}" aria-controls="home" role="tab" data-toggle="tab" th:text="${tagCategory.getCategoryName()}"></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" >
-                            <div role="tabpanel" class="tab-pane" th:id="${tagCategory.getCategoryName()}" th:each="tagCategory:${tags}" >
+                    <label for="tag">Tag:</label>
+                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag"
+                           placeholder="type in tag, separate by ," onclick="showTags()" required autocomplete="off">
+
+                        <div id="allTags" class="tab-content" >
+                            <div role="tabpanel" class="tab-pane active" th:id="${tagCategory2.categoryName}" th:each="tagCategory2:${tags}">
                                 <span>
-                                    <span class="label label-info" th:each="selectTag:${tagCategory.tags}">
+                                    <span class="label label-info" th:each="selectTag:${tagCategory2.getTags()}">
                                     <span class="glyphicon glyphicon-tag" onclick="selectTag(this)"
-                                          th:data-tag="${selectTag}" th:text="${' '+selectTag}"></span>
+                                          th:data-tag="${selectTag}"
+                                          th:text="${' '+selectTag}" style="text-decoration-line: none">
+                                    </span>
                                     </span>
                                 </span>
                             </div>
                         </div>
                     </div>
-                </div>
+
 
 
 
                 <div class="container-fluid main ">
                     <div class="row">
-                        <span th:if="${error!=null}" class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"></span>
-                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div th:if="${error!=null}" class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}" >
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         <button type="submit" class="btn btn-success btn-publish ">Post</button>
+                        </div>
                     </div>
                 </div>
 

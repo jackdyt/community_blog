@@ -117,11 +117,12 @@ function showTags() {
 
 function selectTag(e) {
     var value = e.getAttribute("data-tag");
-    var existed = $("#tag").val();
-    if (existed.indexOf(value) == -1){
-        if (existed){
+    var existed = $("#tag").val().split(",");
+    console.log(existed);
+    if (existed.includes(value) == false){
+        if (existed[0] != ""){
             $("#tag").val(existed+','+value);
-        }else{
+        }else {
             $("#tag").val(value);
         }
     }
