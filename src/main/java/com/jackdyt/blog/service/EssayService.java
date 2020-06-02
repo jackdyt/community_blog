@@ -32,7 +32,7 @@ public class EssayService {
 
     public PageDTO list(Integer page, Integer size) {
         Integer total = (int) essayMapper.countByExample(new EssayExample());
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<EssayDTO> pageDTO = new PageDTO();
         pageDTO.setPageInit(total, page, size);
 
         if (page > pageDTO.getPageNeed()) {
@@ -55,7 +55,7 @@ public class EssayService {
             essayDTO.setUser(user);
             essayDTOList.add(essayDTO);
         }
-        pageDTO.setEssayDTOs(essayDTOList);
+        pageDTO.setData(essayDTOList);
 
 
         return pageDTO;
@@ -65,7 +65,7 @@ public class EssayService {
         EssayExample essayExample = new EssayExample();
         essayExample.createCriteria().andCreatorEqualTo(userId);
         Integer total = (int) essayMapper.countByExample(essayExample);
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<EssayDTO> pageDTO = new PageDTO();
         Integer pageNeed;
         if (total % size == 0) {
             pageNeed = total / size;
@@ -95,7 +95,7 @@ public class EssayService {
             essayDTO.setUser(user);
             essayDTOList.add(essayDTO);
         }
-        pageDTO.setEssayDTOs(essayDTOList);
+        pageDTO.setData(essayDTOList);
 
 
         return pageDTO;

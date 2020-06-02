@@ -33,8 +33,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/posts">My Post</a></li>
-                            <!--                        <li><a href="#">Your profile</a></li>-->
-                            <li><a href="/profile/replies">Latest Reply</a></li>
+                            <li><a href="/profile/replies">Latest Reply
+                                <span class="badge" th:text="${session.notReadCount}"></span>
+                            </a></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </li>

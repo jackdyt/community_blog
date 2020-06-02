@@ -9,6 +9,9 @@
     <script src="/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/css/blog.css">
     <script src="/js/blog.js"></script>
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <script src="/js/editormd.min.js"></script>
+    <script src="/languages/en.js"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -26,10 +29,23 @@
                     <label for="title">Title</label>
                     <input type="text" class="form-control" th:value="${title}" name="title" id="title" placeholder="title" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="post-editor">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" class="form-control" th:text="${description}" rows="10" required></textarea>
+                    <textarea name="description" id="description" class="form-control" style="display:none;"
+                              th:text="${description}" rows="10" required></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("post-editor", {
+                            width  : "100%",
+                            height : 400,
+                            path   : "/js/lib/",
+                            imageUpload: true
+
+
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">Tag</label>
                     <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="type in tag, separate by ," onclick="showTags()" required>

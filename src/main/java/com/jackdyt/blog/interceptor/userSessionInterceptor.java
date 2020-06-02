@@ -3,6 +3,7 @@ package com.jackdyt.blog.interceptor;
 import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.model.UserExample;
+import com.jackdyt.blog.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +18,10 @@ import java.util.List;
 public class userSessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -29,6 +34,8 @@ public class userSessionInterceptor implements HandlerInterceptor {
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users.size() != 0){
                         request.getSession().setAttribute("user", users.get(0));
+                        Long notReadCount = notificationService.NotRead(users.get(0).getId());
+                        request.getSession().setAttribute("notReadCount", notReadCount);
                     }
                     break;
                 }

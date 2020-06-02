@@ -2,6 +2,8 @@ package com.jackdyt.blog.service;
 
 import com.jackdyt.blog.dto.CommentDTO;
 import com.jackdyt.blog.enums.CommentType;
+import com.jackdyt.blog.enums.NotificationStatus;
+import com.jackdyt.blog.enums.NotificationType;
 import com.jackdyt.blog.exception.CustomizeErrorCode;
 import com.jackdyt.blog.exception.CustomizeException;
 import com.jackdyt.blog.mapper.*;
@@ -29,9 +31,11 @@ public class CommentService {
     private UserMapper userMapper;
     @Autowired
     private CommentMapperExtension commentMapperExtension;
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if (comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.PARENT_NOT_FOUND);
         }
@@ -43,19 +47,24 @@ public class CommentService {
             if (dbComment == null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
+            Essay essay = essayMapper.selectByPrimaryKey(dbComment.getParentId());
+            if (essay == null){
+                throw new CustomizeException(CustomizeErrorCode.PARENT_NOT_FOUND);
+            }
             commentMapper.insert(comment);
             //increase the comment count
             Comment parentComment = new Comment();
             parentComment.setCommentCount(1);
             parentComment.setId(comment.getParentId());
             commentMapperExtension.incComment(parentComment);
-
+            addNotification(comment,dbComment.getCommentator(),commentator.getName(), essay.getTitle(),NotificationType.REPLY_COMMENT,essay.getId());
         }else{
             Essay essay = essayMapper.selectByPrimaryKey(comment.getParentId());
             if (essay == null){
                 throw new CustomizeException(CustomizeErrorCode.PARENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            addNotification(comment,essay.getCreator(),commentator.getName(), essay.getTitle(),NotificationType.REPLY_POST,essay.getId());
             essay.setCommentCount(1);
             essayMapperExtension.incComment(essay);
 
@@ -89,5 +98,20 @@ public class CommentService {
             return commentDTO;
         }).collect(Collectors.toList());
         return commentDTOS;
+    }
+
+    public void addNotification(Comment comment, Long receiverId, String notifierName,
+                                String title, NotificationType notificationType, Long notifierId){
+        Notification notification = new Notification();
+        notification.setNotifier(notifierId);
+        notification.setNotifierName(notifierName);
+        notification.setCorrespondingId(comment.getParentId());
+        notification.setReceiver(receiverId);
+        notification.setTitle(title);
+        notification.setType(notificationType.getType());
+        notification.setStatus(NotificationStatus.UNREAD.getStatus());
+        notification.setGmtCreate(System.currentTimeMillis());
+        notificationMapper.insert(notification);
+
     }
 }

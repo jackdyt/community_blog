@@ -12,7 +12,9 @@ public class TagCache {
         List<TagDTO> tagDTOS = new ArrayList<>();
         TagDTO language= new TagDTO();
         language.setCategoryName("Programming Language");
-        language.setTags(Arrays.asList("Spring Boot", "Spring"));
+        language.setTags(Arrays.asList("Spring Boot", "" +
+                "" +
+                ""));
         tagDTOS.add(language);
         TagDTO dataScience = new TagDTO();
         dataScience.setCategoryName("Data Science");

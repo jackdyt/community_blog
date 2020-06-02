@@ -32,7 +32,9 @@
 
 <!--        <table schema="blog" tableName="user" domainObjectName="User" ></table>-->
 <!--        <table schema="blog" tableName="essay" domainObjectName="Essay" ></table>-->
-        <table schema="blog" tableName="comment" domainObjectName="Comment" ></table>
+<!--        <table schema="blog" tableName="comment" domainObjectName="Comment" ></table>-->
+        <table schema="blog" tableName="notification" domainObjectName="Notification" ></table>
+
 
     </context>
 </generatorConfiguration>

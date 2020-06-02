@@ -3,6 +3,7 @@ package com.jackdyt.blog.controller;
 import com.jackdyt.blog.dto.PageDTO;
 import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.service.EssayService;
+import com.jackdyt.blog.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ public class ProfileController {
 
     @Autowired
     private EssayService essayService;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action, Model model,
@@ -33,12 +36,15 @@ public class ProfileController {
         if (action.equals("posts")){
             model.addAttribute("section", "posts");
             model.addAttribute("sectionName", "My posts");
+            PageDTO pageDTO =  essayService.list(user.getId(), page, size);
+            model.addAttribute("pageDTO", pageDTO);
         }else if(action.equals("replies")){
+            PageDTO pageDTO =  notificationService.list(user.getId(), page, size);
+            model.addAttribute("pageDTO", pageDTO);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "Latest Reply");
         }
-        PageDTO pageDTO =  essayService.list(user.getId(), page, size);
-        model.addAttribute("pageDTO", pageDTO);
+
         return "profile";
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageDTO {
-    private List<EssayDTO> essayDTOs;
+public class PageDTO<T> {
+    private List<T> data;
     private boolean showPrev;
     private boolean showFirstPage;
     private boolean showNext;
