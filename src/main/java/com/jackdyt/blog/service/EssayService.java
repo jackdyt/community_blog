@@ -2,6 +2,7 @@ package com.jackdyt.blog.service;
 
 import com.jackdyt.blog.dto.EssayDTO;
 import com.jackdyt.blog.dto.PageDTO;
+import com.jackdyt.blog.dto.SearchDTO;
 import com.jackdyt.blog.exception.CustomizeErrorCode;
 import com.jackdyt.blog.exception.CustomizeException;
 import com.jackdyt.blog.mapper.EssayMapper;
@@ -30,8 +31,15 @@ public class EssayService {
     private EssayMapperExtension essayMapperExtension;
 
 
-    public PageDTO list(Integer page, Integer size) {
-        Integer total = (int) essayMapper.countByExample(new EssayExample());
+    public PageDTO list(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)){
+            String[] words = StringUtils.split(search, " ");
+            search= String.join("|", words);
+        }
+
+        SearchDTO searchDTO = new SearchDTO();
+        searchDTO.setSearch(search);
+        Integer total = essayMapperExtension.countBySearch(searchDTO);
         PageDTO<EssayDTO> pageDTO = new PageDTO();
         pageDTO.setPageInit(total, page, size);
 
@@ -44,7 +52,9 @@ public class EssayService {
         Integer offset = size * (page - 1);
         EssayExample essayExample = new EssayExample();
         essayExample.setOrderByClause("gmt_create desc");
-        List<Essay> essays = essayMapper.selectByExampleWithRowbounds(essayExample, new RowBounds(offset,size));
+        searchDTO.setSize(size);
+        searchDTO.setPage(offset);
+        List<Essay> essays = essayMapperExtension.selectBySearch(searchDTO);
         List<EssayDTO> essayDTOList = new ArrayList<>();
 
 
