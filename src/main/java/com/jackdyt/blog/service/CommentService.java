@@ -63,6 +63,7 @@ public class CommentService {
             if (essay == null){
                 throw new CustomizeException(CustomizeErrorCode.PARENT_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             addNotification(comment,essay.getCreator(),commentator.getName(), essay.getTitle(),NotificationType.REPLY_POST,essay.getId());
             essay.setCommentCount(1);
@@ -101,11 +102,12 @@ public class CommentService {
     }
 
     public void addNotification(Comment comment, Long receiverId, String notifierName,
-                                String title, NotificationType notificationType, Long notifierId){
+                                String title, NotificationType notificationType, Long correspondingId){
+
         Notification notification = new Notification();
-        notification.setNotifier(notifierId);
+        notification.setNotifier(comment.getCommentator());
         notification.setNotifierName(notifierName);
-        notification.setCorrespondingId(comment.getParentId());
+        notification.setCorrespondingId(correspondingId);
         notification.setReceiver(receiverId);
         notification.setTitle(title);
         notification.setType(notificationType.getType());
