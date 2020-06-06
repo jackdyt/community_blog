@@ -6,6 +6,7 @@ import com.jackdyt.blog.mapper.UserMapper;
 import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.provider.GithubProvider;
 import com.jackdyt.blog.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class AuthController {
     @Autowired
     private GithubProvider githubProvider;
@@ -59,6 +61,7 @@ public class AuthController {
             //request.getSession().setAttribute("user", githubUser);
             return "redirect:/index";
         }else{
+            log.error("callback fail to get github", githubUser);
             return "redirect:/index";
         }
 
