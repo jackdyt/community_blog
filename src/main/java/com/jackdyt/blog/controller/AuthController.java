@@ -7,6 +7,7 @@ import com.jackdyt.blog.model.User;
 import com.jackdyt.blog.provider.GithubProvider;
 import com.jackdyt.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,8 @@ public class AuthController {
             userService.check(user);
             response.addCookie(new Cookie("token", token));
             //request.getSession().setAttribute("user", githubUser);
+
+
             return "redirect:/index";
         }else{
             log.error("callback fail to get github", githubUser);

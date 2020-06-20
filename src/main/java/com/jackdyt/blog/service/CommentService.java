@@ -116,4 +116,19 @@ public class CommentService {
         notificationMapper.insert(notification);
 
     }
+    public void deleteComment(Long parentId){
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andParentIdEqualTo(parentId).andTypeEqualTo(1);
+        CommentExample secondCommentExample = new CommentExample();
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        for (Comment comment:comments){
+            secondCommentExample.createCriteria().andParentIdEqualTo(comment.getId()).andTypeEqualTo(2);
+            commentMapper.deleteByExample(secondCommentExample);
+        }
+        commentMapper.deleteByExample(commentExample);
+        return;
+
+
+    }
+
 }

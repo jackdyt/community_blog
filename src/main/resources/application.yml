@@ -13,6 +13,9 @@ spring:
     username: root
     password: welcomejack
     driver-class-name: com.mysql.jdbc.Driver
+  aop:
+    auto: true
+    proxy-target-class: true
 
 mybatis:
   configuration:
@@ -20,10 +23,10 @@ mybatis:
   type-aliases-package: com.jackdyt.blog.mapper
   mapper-locations: classpath:mapper/*.xml
 
-logging:
-  file:
-    path: blog.log
-    max-history: 3
-    max-size: 5MB
-  level:
-    com.jackdyt.blog.mapper: debug
+#logging:
+#  file:
+#    path: blog.log
+#    max-history: 3
+#    max-size: 5MB
+#  level:
+#    com.jackdyt.blog.mapper: debug

@@ -48,7 +48,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/{id:\\d*}", method = RequestMethod.GET)
     public ResultDTO<List<CommentDTO>> secondComment(@PathVariable(name = "id") Long id){
         List<CommentDTO> commentDTOs = commentService.listByTargetId(id, CommentType.COMMENT);
         return ResultDTO.success(commentDTOs);

@@ -19,7 +19,7 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    @GetMapping("/notification/{id}")
+    @GetMapping("/notification/{id:\\d*}")
     public String notification(@PathVariable(name = "id") Long id, HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {

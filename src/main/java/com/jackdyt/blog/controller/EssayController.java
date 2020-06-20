@@ -19,7 +19,7 @@ public class EssayController {
     private EssayService essayService;
     @Autowired
     private CommentService commentService;
-    @GetMapping("/essay/{id}")
+    @GetMapping("/essay/{id:\\d*}")
     public String essay(@PathVariable(name = "id") Long id, Model model){
         EssayDTO essayDTO = essayService.getById(id);
         List<EssayDTO> relatedEssay = essayService.selectRelated(essayDTO);

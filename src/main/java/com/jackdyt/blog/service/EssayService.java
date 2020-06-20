@@ -171,4 +171,9 @@ public class EssayService {
         }).collect(Collectors.toList());
         return essayDTOS;
     }
+
+    public void deleteEssay(Long id){
+        essayMapper.deleteByPrimaryKey(id);
+        return;
+    }
 }

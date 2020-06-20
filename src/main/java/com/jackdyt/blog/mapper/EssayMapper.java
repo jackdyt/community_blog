@@ -1,6 +1,6 @@
 package com.jackdyt.blog.mapper;
 
-import com.jackdyt.blog.dto.SearchDTO;
+
 import com.jackdyt.blog.model.Essay;
 import com.jackdyt.blog.model.EssayExample;
 import java.util.List;
