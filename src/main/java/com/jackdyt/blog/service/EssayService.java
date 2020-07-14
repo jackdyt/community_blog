@@ -31,14 +31,16 @@ public class EssayService {
     private EssayMapperExtension essayMapperExtension;
 
 
-    public PageDTO list(String search, Integer page, Integer size) {
+    public PageDTO list(String tagName, String search, Integer page, Integer size) {
         if(StringUtils.isNotBlank(search)){
             String[] words = StringUtils.split(search, " ");
             search= String.join("|", words);
         }
 
+
         SearchDTO searchDTO = new SearchDTO();
         searchDTO.setSearch(search);
+        searchDTO.setTagName(tagName);
         Integer total = essayMapperExtension.countBySearch(searchDTO);
         PageDTO<EssayDTO> pageDTO = new PageDTO();
         pageDTO.setPageInit(total, page, size);

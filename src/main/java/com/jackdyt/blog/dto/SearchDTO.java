@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchDTO {
     private String search;
+    private String tagName;
     private Integer page;
     private Integer size;
 }

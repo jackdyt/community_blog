@@ -46,26 +46,26 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pageDTO.showFirstPage}">
-                        <a th:href="@{/(page=1,search=${search})}" aria-label="Previous">
+                        <a th:href="@{/(page=1,search=${search},tag=${tag})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="${pageDTO.showPrev}">
-                        <a th:href="@{/(page=${pageDTO.getPage()-1})}" aria-label="Previous">
+                        <a th:href="@{/(page=${pageDTO.getPage()-1},tag=${tag})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page: ${pageDTO.pages}" th:class="${pageDTO.page==page} ? 'active':''"><a
-                            th:href="@{/(page=${page},search=${search})}"  th:text="${page}" >
+                            th:href="@{/(page=${page},search=${search},tag=${tag})}"  th:text="${page}" >
 
                     </a></li>
                     <li th:if="${pageDTO.showNext}">
-                        <a th:href="@{/(page=${pageDTO.getPage()+1},search=${search})}"aria-label="Next">
+                        <a th:href="@{/(page=${pageDTO.getPage()+1},search=${search},tag=${tag})}"aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pageDTO.showFinalPage}">
-                        <a th:href="@{/(page=${pageDTO.getPageNeed()},search=${search})}" aria-label="Next">
+                        <a th:href="@{/(page=${pageDTO.getPageNeed()},search=${search},tag=${tag})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -77,7 +77,18 @@
                 <h4>Nice Image</h4>
                 <img class="img-thumbnail" src="/images/fgo.png"  >
             </div>
+            <!--        hot tags-->
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>Hot Tags</h4>
+                <ul >
+                    <li th:each="hotTag:${hotTagDTOs}" >
+                        <a th:href="@{/(page=1,search=${search},tag=${hotTag.getName()})}" th:text="${hotTag.getName()}" style="padding-left: 1px"></a>
+                    </li>
+                </ul>
+            </div>
         </div>
+
     </div>
 </div>
 <div th:insert="~{footer}"></div>

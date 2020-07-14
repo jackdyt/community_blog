@@ -40,6 +40,9 @@
       <if test="search != '' and search != null">
         and title regexp #{search}
       </if>
+      <if test="tagName != null and tagName != '' ">
+        and tag = #{tagName}
+      </if>
     </where>
 
   </select>
@@ -48,8 +51,11 @@
     select *
     from essay
     <where>
-      <if test="search != '' and search != null">
+      <if test="search != null and search != '' ">
         and title regexp #{search}
+      </if>
+      <if test="tagName != null and tagName != '' ">
+        and tag = #{tagName}
       </if>
     </where>
     order by gmt_create desc
