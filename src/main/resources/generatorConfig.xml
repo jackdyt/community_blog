@@ -7,6 +7,9 @@
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+<!--        <plugin type="org.mybatis.generator.plugins.CachePlugin">-->
+<!--            <property name="cache_type" value="com.jackdyt.blog.cache.RedisCache"/>-->
+<!--        </plugin>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/blog?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC"
                         userId="root"
@@ -30,11 +33,13 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
+
+
 <!--        <table schema="blog" tableName="user" domainObjectName="User" ></table>-->
-<!--        <table schema="blog" tableName="essay" domainObjectName="Essay" ></table>-->
+        <table schema="blog" tableName="essay" domainObjectName="Essay" ></table>
 <!--        <table schema="blog" tableName="comment" domainObjectName="Comment" ></table>-->
 <!--        <table schema="blog" tableName="notification" domainObjectName="Notification" ></table>-->
-        <table schema="blog" tableName="administrator" domainObjectName="Admin" ></table>
+<!--        <table schema="blog" tableName="administrator" domainObjectName="Admin" ></table>-->
 
 
 
