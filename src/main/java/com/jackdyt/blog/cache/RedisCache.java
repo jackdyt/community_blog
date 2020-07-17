@@ -1,7 +1,7 @@
 package com.jackdyt.blog.cache;
 
 import com.jackdyt.blog.utils.ApplicationContextUtils;
-import org.apache.ibatis.cache.Cache;git
+import org.apache.ibatis.cache.Cache;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
