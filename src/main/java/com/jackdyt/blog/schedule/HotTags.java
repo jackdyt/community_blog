@@ -27,36 +27,21 @@ public class HotTags {
     @Scheduled(fixedRate = 10000)
     public void hotTagSchedule(){
 
-        int offset = 0;
-        int limit = 5;
-        int priority = 0;
-        Map<String, Integer> tagPriority = HotTagCache.getHotTags();
-//        List<Essay> essays = new ArrayList<>();
-        Object exp = essayMapper.selectByExample(new EssayExample());
-        List<Essay> essays = (List<Essay>) essayMapper.selectByExample(new EssayExample());
-        for (Essay essay:essays){
 
+        int priority = 0, score = 0;
+        Map<String, Integer> tagPriority = HotTagCache.getHotTags();
+
+        List<Essay> essays = essayMapper.selectByExample(new EssayExample());
+        for (Essay essay:essays){
             String[] tags = essay.getTag().split(",");
+            score = 3 + 2*essay.getCommentCount() + essay.getViewCount();
             for (String tag : tags) {
-                priority = 3 + 2*essay.getCommentCount() + essay.getViewCount();
+                priority = score + tagPriority.getOrDefault(tag, 0);
                 tagPriority.put(tag, priority);
             }
 
         }
-//        while (offset ==0 || essays.size() == limit){
-////            essays = (List<Essay>) essayMapper.selectByExampleWithRowbounds(new EssayExample(), new RowBounds(offset, limit));
-//            essays = essayMapper.selectByExample(new EssayExample());
-//            for (Essay essay:essays){
-//
-//                String[] tags = essay.getTag().split(",");
-//                for (String tag : tags) {
-//                    priority = 3 + 2*essay.getCommentCount() + essay.getViewCount();
-//                    tagPriority.put(tag, priority);
-//                }
-//
-//            }
-//            offset+=limit;
-//        }
+
 //        HotTagCache.getHotTags().forEach(
 //                (k,v)->{
 //                    System.out.println(k+":" + v + "");

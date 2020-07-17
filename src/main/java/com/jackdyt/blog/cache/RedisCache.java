@@ -1,8 +1,7 @@
 package com.jackdyt.blog.cache;
 
 import com.jackdyt.blog.utils.ApplicationContextUtils;
-import org.apache.ibatis.cache.Cache;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.ibatis.cache.Cache;git
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -38,8 +37,6 @@ public class RedisCache implements Cache {
     @Override
     public Object getObject(Object key) {
         RedisTemplate redisTemplate = defineRedis();
-
-        System.out.println(redisTemplate.opsForHash().get(id.toString(), key.toString()));
         return redisTemplate.opsForHash().get(id.toString(), key.toString());
     }
 
@@ -51,6 +48,7 @@ public class RedisCache implements Cache {
 
     @Override
     public void clear() {
+//        System.out.println("call clear method in redis cache");
         RedisTemplate redisTemplate = defineRedis();
         redisTemplate.delete(id.toString());
     }

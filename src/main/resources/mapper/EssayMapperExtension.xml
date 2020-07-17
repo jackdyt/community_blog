@@ -62,4 +62,6 @@
     limit #{page}, #{size}
 
   </select>
+
+  <cache type="com.jackdyt.blog.cache.RedisCache"/>
 </mapper>

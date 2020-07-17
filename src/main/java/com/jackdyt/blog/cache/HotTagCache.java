@@ -8,6 +8,7 @@ public class HotTagCache {
     private static final Map<String, Integer> hotTags = new HashMap<>();
     private static List<HotTagDTO> hotTagDTOS= new ArrayList<>();
     public static synchronized Map<String, Integer> getHotTags(){
+        hotTags.clear();
         return hotTags;
     }
 
@@ -32,7 +33,7 @@ public class HotTagCache {
         while (!priorityQueue.isEmpty()){
             hotTagDTOS.add(0,priorityQueue.poll());
         }
-        System.out.println(hotTagDTOS);
+//        System.out.println(hotTagDTOS);
         return;
     }
 }
