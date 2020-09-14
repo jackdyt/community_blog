@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.jackdyt.blog.dto.ResultDTO;
 import com.jackdyt.blog.exception.CustomizeErrorCode;
 import com.jackdyt.blog.exception.CustomizeException;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+/**
+ * @description: handle exceptions and return to the error page
+ */
 
 @ControllerAdvice
 public class CustomizeExceptionHandler {

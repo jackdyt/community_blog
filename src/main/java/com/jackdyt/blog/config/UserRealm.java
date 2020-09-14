@@ -15,6 +15,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * @description: verify admins
+ */
 
 public class UserRealm  extends AuthorizingRealm{
     @Autowired

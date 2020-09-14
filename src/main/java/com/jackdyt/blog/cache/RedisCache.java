@@ -17,6 +17,8 @@ public class RedisCache implements Cache {
 
     private RedisTemplate defineRedis(){
         RedisTemplate redisTemplate = (RedisTemplate) ApplicationContextUtils.getBean("redisTemplate");
+        // define redis key serializer
+        // No need to define hashkey serializer
         redisTemplate.setKeySerializer(new StringRedisSerializer());
 //        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         return redisTemplate;
@@ -42,13 +44,12 @@ public class RedisCache implements Cache {
 
     @Override
     public Object removeObject(Object key) {
-        System.out.println("remove method is called");
+        //never called
         return null;
     }
 
     @Override
     public void clear() {
-//        System.out.println("call clear method in redis cache");
         RedisTemplate redisTemplate = defineRedis();
         redisTemplate.delete(id.toString());
     }

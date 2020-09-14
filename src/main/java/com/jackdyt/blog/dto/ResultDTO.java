@@ -5,6 +5,9 @@ import com.jackdyt.blog.exception.CustomizeException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+/**
+ * @description: Error result
+ */
 
 @Data
 @AllArgsConstructor

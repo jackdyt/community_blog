@@ -115,9 +115,12 @@ public class EssayService {
 
     public EssayDTO getById(Long id) {
         Essay essay = essayMapper.selectByPrimaryKey(id);
+
+        //handle exceptions
         if (essay == null){
             throw new CustomizeException(CustomizeErrorCode.ESSAY_NOT_FOUND);
         }
+
         EssayDTO essayDTO = new EssayDTO();
         User user = userMapper.selectByPrimaryKey(essay.getCreator());
         BeanUtils.copyProperties(essay, essayDTO);
@@ -161,11 +164,13 @@ public class EssayService {
             return  new ArrayList<>();
         }
         String[] tags = StringUtils.split(essayDTO.getTag(), ",");
-        String regex = String.join("|", tags);
+//        String regex = String.join("|", tags);
         Essay essay = new Essay();
         essay.setId(essayDTO.getId());
         essay.setTag(essayDTO.getTag());
         List<Essay> essays = essayMapperExtension.selectRelatedTag(essay);
+        //convert list of Essay to list of EssayDTO
+        //should use dto we define
         List<EssayDTO> essayDTOS = essays.stream().map(e->{
             EssayDTO essayDTOTmp = new EssayDTO();
             BeanUtils.copyProperties(e, essayDTOTmp);

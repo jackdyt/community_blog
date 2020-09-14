@@ -12,6 +12,10 @@ import org.springframework.context.annotation.DependsOn;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @description: define the authority of admin
+ */
+
 @Configuration
 public class ShiroConfig {
 
@@ -19,7 +23,7 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean getShiroFilterFactoryBean( DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         filterFactoryBean.setSecurityManager(securityManager);
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String,String> map = new HashMap<>();
         map.put("/login.html","anon");
         map.put("/register","anon");
         map.put("/registerview","anon");
@@ -48,6 +52,10 @@ public class ShiroConfig {
         userRealm.setCredentialsMatcher(credentialsMatcher);
         return userRealm;
     }
+
+    //solve the following problem
+    //Consider injecting the bean as one of its interfaces or forcing the use of CGLib-based proxies by setting proxyTargetClass=true on @EnableAsync and/or @EnableCaching.
+    //The bean has been used by both spring and shiro so it becomes a proxy
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
     public static DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {

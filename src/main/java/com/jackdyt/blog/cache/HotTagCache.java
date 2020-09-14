@@ -3,7 +3,9 @@ package com.jackdyt.blog.cache;
 import com.jackdyt.blog.dto.HotTagDTO;
 
 import java.util.*;
-
+/**
+ * @description:
+ */
 public class HotTagCache {
     private static final Map<String, Integer> hotTags = new HashMap<>();
     private static List<HotTagDTO> hotTagDTOS= new ArrayList<>();

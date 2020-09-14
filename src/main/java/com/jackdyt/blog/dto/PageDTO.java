@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,10 +23,6 @@ public class PageDTO<T> {
     private Integer pageNeed;
 
     public void setPageInit(Integer total, Integer page, Integer size) {
-
-
-
-
         if(total % size == 0){
             pageNeed = total / size;
         }else{

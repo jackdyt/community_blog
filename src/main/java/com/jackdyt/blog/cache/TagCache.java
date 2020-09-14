@@ -4,6 +4,9 @@ import com.jackdyt.blog.dto.TagDTO;
 import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
+/**
+ * @description: define the tags that user can use
+ */
 public class TagCache {
 
     public static List<TagDTO> get(){
